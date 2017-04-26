@@ -9,7 +9,7 @@
     "https://secure.flickr.com/"
   ],
   "browser_action": {
-    "default_icon": "img/icon.png",
+    "default_icon": "img/small-dino-dinosaur-dragon-walk-512.png",
     "default_popup": "popup.html"
   }
 }
