@@ -66,31 +66,59 @@ function renderStatusInPopup(statusText)
     document.getElementById('status').textContent += statusText;
 }
 
-function renderStatusInTab(statusText) {
-    chrome.tabs.executeScript(
-        {
-            code: "document.getElementById('status').textContent += 'AAAAAAAAAAAAAAAAAAAAA';"
-        });
+function renderStatusInTab(statusText)
+{
+    var code = "";
+    code +=  "var p = document.createElement('p');"      
+    code +=  "var node = document.createTextNode('" + statusText + "');"
+    code +=  "p.appendChild(node);"
 
-    //chrome.tabs.executeScript(
-    //{
-    //    code: "document.getElementById('status').textContent += statusText;"
-    //});
+    code +=  "var element = document.getElementById('status');"
+    code +=  "element.appendChild(p);"
+
+    chrome.tabs.executeScript(
+    {
+        code: code
+    });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+
+function clickColor(e)
+{
+    chrome.tabs.executeScript(null,
+    {
+        code: "document.body.style.backgroundColor='" + e.target.id + "'"
+    });
+    //window.close();
+}
+
+function clickStatus(e) {
+    getCurrentTabUrl(function (url)
+    {
+        renderStatusInTab('Tab URL: ' + url);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () //gets the tab url and add it to the status popup
+{
     getCurrentTabUrl(function (url)
     {
         renderStatusInPopup('Tab URL: ' + url);
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    getCurrentTabUrl(function (url) {
-        // Put the image URL in Google search.
-        renderStatusInTab('Tab URL: ' + url);
-    });
+document.addEventListener('DOMContentLoaded', function () //status popup click action
+{
+    var div = document.getElementById('status');
+    div.addEventListener('click', clickStatus);
 });
 
-//TODO: fazer links na pagina de popup e fazer scripts pra executar neles
+document.addEventListener('DOMContentLoaded', function () {
+    var divs = document.querySelectorAll('div');
+    for (var i = 0; i < divs.length; i++)
+    {
+        divs[i].addEventListener('click', clickColor);
+    }
+});
+
 
