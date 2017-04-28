@@ -1,19 +1,6 @@
-// Copyright (c) 2014 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-function Log(msg)
-{
-    console.log("==========> " + msg);
-}
-
-
-
-function getCurrentTab(callback)
-{
-    // Query filter to be passed to chrome.tabs.query - see
-    // https://developer.chrome.com/extensions/tabs#method-query
-    var queryInfo = {
+﻿function getCurrentTab(callback) {
+    var queryInfo =
+    {
         active: true,
         currentWindow: true
     };
@@ -27,7 +14,7 @@ function getCurrentTab(callback)
         var tab = tabs[0];
 
         callback(tab);
-    });    
+    });
 }
 /**
  * Get the current URL.
@@ -37,8 +24,6 @@ function getCurrentTab(callback)
  */
 function getCurrentTabUrl(callback) {
     getCurrentTab(function (tab) {
-        // A tab is a plain object that provides information about the tab.
-        // See https://developer.chrome.com/extensions/tabs#type-Tab
         var url = tab.url;
 
         // tab.url is only available if the "activeTab" permission is declared.
@@ -60,21 +45,17 @@ function getCurrentTabUrl(callback) {
     // alert(url); // Shows "undefined", because chrome.tabs.query is async.
 }
 
-function renderStatusInPopup(statusText)
-{
-    Log(statusText);
-    document.getElementById('status').textContent += statusText;
-}
+
 
 function renderStatusInTab(statusText)
 {
     var code = "";
-    code +=  "var p = document.createElement('p');"      
-    code +=  "var node = document.createTextNode('" + statusText + "');"
-    code +=  "p.appendChild(node);"
+    code += "var p = document.createElement('p');"
+    code += "var node = document.createTextNode('" + statusText + "');"
+    code += "p.appendChild(node);"
 
-    code +=  "var element = document.getElementById('status');"
-    code +=  "element.appendChild(p);"
+    code += "var element = document.getElementById('status');"
+    code += "element.appendChild(p);"
 
     chrome.tabs.executeScript(
     {
@@ -82,43 +63,20 @@ function renderStatusInTab(statusText)
     });
 }
 
-
-function clickColor(e)
+function clickStatus(e)
 {
-    chrome.tabs.executeScript(null,
-    {
-        code: "document.body.style.backgroundColor='" + e.target.id + "'"
-    });
-    //window.close();
-}
-
-function clickStatus(e) {
     getCurrentTabUrl(function (url)
     {
         renderStatusInTab('Tab URL: ' + url);
+        Log(url);
     });
 }
 
-document.addEventListener('DOMContentLoaded', function () //gets the tab url and add it to the status popup
-{
-    getCurrentTabUrl(function (url)
-    {
-        renderStatusInPopup('Tab URL: ' + url);
-    });
-});
+
+
 
 document.addEventListener('DOMContentLoaded', function () //status popup click action
 {
     var div = document.getElementById('status');
     div.addEventListener('click', clickStatus);
 });
-
-document.addEventListener('DOMContentLoaded', function () {
-    var divs = document.querySelectorAll('div');
-    for (var i = 0; i < divs.length; i++)
-    {
-        divs[i].addEventListener('click', clickColor);
-    }
-});
-
-

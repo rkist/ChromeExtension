@@ -38,9 +38,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app\scripts\colors.js" />
     <Content Include="app\img\small-dino-dinosaur-dragon-walk-512.png" />
+    <Content Include="app\popup.css" />
     <Content Include="app\popup.html" />
-    <Content Include="app\popup.js" />
+    <Content Include="app\scripts\misc.js" />
+    <Content Include="app\scripts\status.js" />
     <Content Include="Properties\build\lib\Ionic.Zip.DLL" />
     <Content Include="Properties\build\lib\MSBuild.ExtensionPack.dll" />
     <Content Include="screenshots\screenshot.png" />
