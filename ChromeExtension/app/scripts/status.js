@@ -49,17 +49,22 @@ function getCurrentTabUrl(callback) {
 
 function renderStatusInTab(statusText)
 {
-    var code = "";
-    code += "var p = document.createElement('p');"
-    code += "var node = document.createTextNode('" + statusText + "');"
-    code += "p.appendChild(node);"
+    //var code = "";
+    //code += "var p = document.createElement('p');"
+    //code += "var node = document.createTextNode('" + statusText + "');"
+    //code += "p.appendChild(node);"
 
-    code += "var element = document.getElementById('status');"
-    code += "element.appendChild(p);"
+    //code += "var element = document.getElementById('status');"
+    //code += "element.appendChild(p);"
 
     chrome.tabs.executeScript(
+        null,
     {
-        code: code
+        file: "scripts/injection/append.js" //TODO: fazer receber argumentos??
+    },
+    function (msg)
+    {
+        Log(msg);
     });
 }
 

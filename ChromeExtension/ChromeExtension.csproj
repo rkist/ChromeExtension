@@ -42,6 +42,7 @@
     <Content Include="app\img\small-dino-dinosaur-dragon-walk-512.png" />
     <Content Include="app\popup.css" />
     <Content Include="app\popup.html" />
+    <Content Include="app\scripts\injection\append.js" />
     <Content Include="app\scripts\misc.js" />
     <Content Include="app\scripts\status.js" />
     <Content Include="Properties\build\lib\Ionic.Zip.DLL" />
